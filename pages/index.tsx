@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Head from "next/head";
-import ThemeButton from "../components";
+import ThemeButton from "../components/ThemeButton";
 
 export default function Homepage() {
   return (
@@ -56,10 +56,13 @@ export default function Homepage() {
                   bg: "blue.500",
                 }}
               >
-                Create Room
+                <Link href="/create/credentials">Create Room</Link>
               </Button>
               <Button rounded={"full"}>
                 <Link href="/join">Join Room</Link>
+              </Button>
+              <Button rounded={"full"}>
+                <Link href="/browse">Find Rooms</Link>
               </Button>
             </Stack>
           </Stack>
