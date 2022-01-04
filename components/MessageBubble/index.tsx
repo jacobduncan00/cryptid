@@ -25,45 +25,37 @@ export default function MessageBubble({
   return (
     <VStack w={"full"}>
       <Text align={"center"}>{timeStamp}</Text>
-      {align === "left" ? (
-        <HStack>
-          <Stack
-            spacing={4}
-            w={"md"}
-            bg={useColorModeValue("white", "gray.700")}
-            rounded={"xl"}
-            boxShadow={"lg"}
-            p={6}
-            my={12}
-          >
-            <Text>{message}</Text>
-          </Stack>
+      <HStack>
+        {align === "right" ? (
           <Wrap>
             <WrapItem>
               <Avatar name={name} bg={color} />
             </WrapItem>
           </Wrap>
-        </HStack>
-      ) : (
-        <HStack>
+        ) : (
+          <></>
+        )}
+        <Stack
+          spacing={4}
+          w={"md"}
+          bg={useColorModeValue("white", "gray.700")}
+          rounded={"xl"}
+          boxShadow={"lg"}
+          p={6}
+          my={12}
+        >
+          <Text>{message}</Text>
+        </Stack>
+        {align === "left" ? (
           <Wrap>
             <WrapItem>
               <Avatar name={name} bg={color} />
             </WrapItem>
           </Wrap>
-          <Stack
-            spacing={4}
-            w={"md"}
-            bg={useColorModeValue("white", "gray.700")}
-            rounded={"xl"}
-            boxShadow={"lg"}
-            p={6}
-            my={12}
-          >
-            <Text>{message}</Text>
-          </Stack>
-        </HStack>
-      )}
+        ) : (
+          <></>
+        )}
+      </HStack>
     </VStack>
   );
 }
