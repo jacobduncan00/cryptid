@@ -22,19 +22,35 @@ export default function MessageBubble({
   timeStamp,
   color,
 }: Props): JSX.Element {
+  const MessageDisplayRight = () => {
+    if (align === "right") {
+      return (
+        <Wrap>
+          <WrapItem>
+            <Avatar name={name} bg={color} />
+          </WrapItem>
+        </Wrap>
+      );
+    }
+  };
+
+  const MessageDisplayLeft = () => {
+    if (align === "left") {
+      return (
+        <Wrap>
+          <WrapItem>
+            <Avatar name={name} bg={color} />
+          </WrapItem>
+        </Wrap>
+      );
+    }
+  };
+
   return (
     <VStack w={"full"}>
       <Text align={"center"}>{timeStamp}</Text>
       <HStack>
-        {align === "right" ? (
-          <Wrap>
-            <WrapItem>
-              <Avatar name={name} bg={color} />
-            </WrapItem>
-          </Wrap>
-        ) : (
-          <></>
-        )}
+        {MessageDisplayRight}
         <Stack
           spacing={4}
           w={"md"}
@@ -46,15 +62,7 @@ export default function MessageBubble({
         >
           <Text>{message}</Text>
         </Stack>
-        {align === "left" ? (
-          <Wrap>
-            <WrapItem>
-              <Avatar name={name} bg={color} />
-            </WrapItem>
-          </Wrap>
-        ) : (
-          <></>
-        )}
+        {MessageDisplayLeft}
       </HStack>
     </VStack>
   );
