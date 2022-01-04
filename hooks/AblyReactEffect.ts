@@ -2,12 +2,16 @@ import { Types } from "ably";
 import Ably from "ably";
 import { useEffect } from "react";
 
-const ably = new Ably.Realtime({ authUrl: "/api/createTokenRequest" });
+const ably = new Ably.Realtime({
+  authUrl: "http://localhost:3000/api/createTokenRequest",
+});
+
+console.log(process.env.BASE_URL);
 
 export function useChannel(
   channelName: string,
   callbackOnMessage: (msg: Types.Message) => void
-): [Ably.Types.RealtimeChannelCallbacks] {
+): [Ably.Types.RealtimeChannelCallbacks, Ably.Realtime] {
   let channel: Ably.Types.RealtimeChannelCallbacks;
   channel = ably.channels.get(channelName);
 
@@ -30,5 +34,5 @@ export function useChannel(
 
   useEffect(useEffectHook);
 
-  return [channel];
+  return [channel, ably];
 }

@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 type Props = {
+  align: string;
   name: string;
   message: string;
   timeStamp: string;
@@ -21,18 +22,19 @@ type Props = {
 };
 
 export default function MessageBubble({
+  align,
   name,
   message,
   timeStamp,
   color,
 }: Props): JSX.Element {
   return (
-    <VStack w={"full"}>
+    <VStack w={"full"} align={align}>
       <Text align={"left"}>{timeStamp}</Text>
       <HStack>
         <Wrap>
           <WrapItem>
-            <Avatar name={name} />
+            <Avatar name={name} bg={color} />
           </WrapItem>
         </Wrap>
         <Stack
@@ -45,9 +47,7 @@ export default function MessageBubble({
           p={6}
           my={12}
         >
-          <Text>
-            {message} - {color}
-          </Text>
+          <Text>{message}</Text>
         </Stack>
       </HStack>
     </VStack>

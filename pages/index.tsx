@@ -2,16 +2,17 @@ import {
   Button,
   Flex,
   Heading,
-  Image,
   Stack,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Head from "next/head";
+import { useColorMode } from "@chakra-ui/react";
 import ThemeButton from "../components/ThemeButton";
 
 export default function Homepage() {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
       <Head>
@@ -64,6 +65,7 @@ export default function Homepage() {
               <Button rounded={"full"}>
                 <Link href="/browse">Find Rooms</Link>
               </Button>
+              <ThemeButton />
             </Stack>
           </Stack>
         </Flex>

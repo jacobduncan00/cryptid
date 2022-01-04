@@ -20,10 +20,13 @@ const ChatComponent = ({ id, name, color }: Props) => {
   const [receivedMessages, setMessages] = useState<Types.Message[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
 
-  const [channel] = useChannel(`channel${id}`, (message: Types.Message) => {
-    const history = receivedMessages.slice(-199);
-    setMessages([...history, message]);
-  });
+  const [channel, ably] = useChannel(
+    `channel${id}`,
+    (message: Types.Message) => {
+      const history = receivedMessages.slice(-199);
+      setMessages([...history, message]);
+    }
+  );
 
   const sendChatMessage = (messageText: string) => {
     if (messageText === "") {
@@ -65,8 +68,18 @@ const ChatComponent = ({ id, name, color }: Props) => {
   };
 
   const messages = receivedMessages.map((message: any, index) => {
-    return (
+    return ably.connection.id ? (
       <MessageBubble
+        align={"right"}
+        key={index}
+        message={message.data.message}
+        name={message.data.name}
+        color={message.data.color}
+        timeStamp={message.data.timeStamp}
+      />
+    ) : (
+      <MessageBubble
+        align={"left"}
         key={index}
         message={message.data.message}
         name={message.data.name}
