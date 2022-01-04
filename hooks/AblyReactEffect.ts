@@ -3,9 +3,7 @@ import Ably from "ably";
 import { useEffect } from "react";
 
 const ably = new Ably.Realtime({
-  // authUrl: "http://localhost:3000/api/createTokenRequest",
-  authUrl:
-    "https://cryptid-jq5t30syw-jacobduncan00.vercel.app/api/createTokenRequest",
+  authUrl: "/api/createTokenRequest",
 });
 
 console.log(process.env.BASE_URL);

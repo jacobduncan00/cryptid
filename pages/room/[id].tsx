@@ -1,5 +1,9 @@
 import { useRouter } from "next/router";
-import ChatComponent from "../../components/ChatComponent";
+import dynamic from "next/dynamic";
+
+const ChatComponent = dynamic(() => import("../../components/ChatComponent"), {
+  ssr: false,
+});
 
 const Room = () => {
   const router = useRouter();
