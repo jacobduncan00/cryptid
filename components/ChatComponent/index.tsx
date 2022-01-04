@@ -21,7 +21,8 @@ const ChatComponent = ({ id, name, color }: Props) => {
   const messageTextIsEmpty = messageText.trim().length === 0;
 
   const [channel, ably] = useChannel(
-    `channel${id}`,
+    // `channel${id}`,
+    "channel1",
     (message: Types.Message) => {
       const history = receivedMessages.slice(-199);
       setMessages([...history, message]);
