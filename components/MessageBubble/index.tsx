@@ -5,13 +5,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import {
-  Avatar,
-  AvatarBadge,
-  AvatarGroup,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
+import { Avatar, Wrap, WrapItem, Flex } from "@chakra-ui/react";
 
 type Props = {
   align: string;
@@ -29,27 +23,47 @@ export default function MessageBubble({
   color,
 }: Props): JSX.Element {
   return (
-    <VStack w={"full"} align={align}>
-      <Text align={"left"}>{timeStamp}</Text>
-      <HStack>
-        <Wrap>
-          <WrapItem>
-            <Avatar name={name} bg={color} />
-          </WrapItem>
-        </Wrap>
-        <Stack
-          spacing={4}
-          w={"full"}
-          maxW={"md"}
-          bg={useColorModeValue("white", "gray.700")}
-          rounded={"xl"}
-          boxShadow={"lg"}
-          p={6}
-          my={12}
-        >
-          <Text>{message}</Text>
-        </Stack>
-      </HStack>
+    <VStack w={"full"}>
+      <Text align={"center"}>{timeStamp}</Text>
+      {align === "left" ? (
+        <HStack>
+          <Stack
+            spacing={4}
+            w={"md"}
+            bg={useColorModeValue("white", "gray.700")}
+            rounded={"xl"}
+            boxShadow={"lg"}
+            p={6}
+            my={12}
+          >
+            <Text>{message}</Text>
+          </Stack>
+          <Wrap>
+            <WrapItem>
+              <Avatar name={name} bg={color} />
+            </WrapItem>
+          </Wrap>
+        </HStack>
+      ) : (
+        <HStack>
+          <Wrap>
+            <WrapItem>
+              <Avatar name={name} bg={color} />
+            </WrapItem>
+          </Wrap>
+          <Stack
+            spacing={4}
+            w={"md"}
+            bg={useColorModeValue("white", "gray.700")}
+            rounded={"xl"}
+            boxShadow={"lg"}
+            p={6}
+            my={12}
+          >
+            <Text>{message}</Text>
+          </Stack>
+        </HStack>
+      )}
     </VStack>
   );
 }

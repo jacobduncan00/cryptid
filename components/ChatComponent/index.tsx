@@ -73,7 +73,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
       <MessageBubble
         align={"right"}
         key={index}
-        message={`${message.data.message} - ME`}
+        message={message.data.message}
         name={message.data.name}
         color={message.data.color}
         timeStamp={message.data.timeStamp}
@@ -82,7 +82,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
       <MessageBubble
         align={"left"}
         key={index}
-        message={`${message.data.message} - OTHER`}
+        message={message.data.message}
         name={message.data.name}
         color={message.data.color}
         timeStamp={message.data.timeStamp}
