@@ -1,41 +1,10 @@
-import {
-  Button,
-  FormControl,
-  Flex,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  useColorModeValue,
-  VStack,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import Ably from "ably";
-import MessageBubble from "../MessageBubble";
+import { Flex, useColorModeValue, VStack } from "@chakra-ui/react";
 
 type Props = {
-  id: number;
+  messages: JSX.Element[];
 };
 
-export default function MessageFeed({ id }: Props): JSX.Element {
-  const [messages, setMessages] = useState<Object[]>([]);
-  useEffect(() => {
-    let channel;
-    const ably = new Ably.Realtime(process.env.ABLY_REALTIME_KEY);
-    channel = ably.channels.get("test");
-    channel.subscribe("message", function (message) {
-      setMessages((m) => [
-        ...m,
-        {
-          message: message.data.message,
-          user: message.data.user,
-          color: message.data.color,
-          timeStamp: message.data.timeStamp,
-        },
-      ]);
-    });
-  }, []);
-
+export default function MessageFeed({ messages }: Props): JSX.Element {
   return (
     <Flex
       minH={"90vh"}
@@ -43,17 +12,7 @@ export default function MessageFeed({ id }: Props): JSX.Element {
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <VStack>
-        {messages.map((msg: any, i) => (
-          <MessageBubble
-            key={i}
-            message={msg.message}
-            name={msg.user}
-            color={msg.color}
-            timeStamp={msg.timeStamp}
-          />
-        ))}
-      </VStack>
+      <VStack>{messages}</VStack>
     </Flex>
   );
 }
