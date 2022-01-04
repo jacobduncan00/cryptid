@@ -7,3 +7,4 @@
 - [] Align messages left/right depending on sender (you right, others left)
 - [] Make chat room look better
 - [] Have desired functionality of buttons on landing page
+- [] Change theme button and place in better spot
