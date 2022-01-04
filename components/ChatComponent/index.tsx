@@ -69,11 +69,11 @@ const ChatComponent = ({ id, name, color }: Props) => {
   };
 
   const messages = receivedMessages.map((message: any, index) => {
-    return ably.connection.id ? (
+    return message.connectionId === ably.connection.id ? (
       <MessageBubble
         align={"right"}
         key={index}
-        message={message.data.message}
+        message={`${message.data.message} - ME`}
         name={message.data.name}
         color={message.data.color}
         timeStamp={message.data.timeStamp}
@@ -82,7 +82,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
       <MessageBubble
         align={"left"}
         key={index}
-        message={message.data.message}
+        message={`${message.data.message} - OTHER`}
         name={message.data.name}
         color={message.data.color}
         timeStamp={message.data.timeStamp}
