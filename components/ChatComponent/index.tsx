@@ -1,9 +1,8 @@
 import { Button, Center, HStack, Input } from "@chakra-ui/react";
 import { Types } from "ably";
-import { m } from "framer-motion";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useChannel } from "../../hooks/AblyReactEffect";
+import InviteButton from "../InviteButton";
 import MessageBubble from "../MessageBubble";
 import MessageFeed from "../MessageFeed";
 
@@ -30,7 +29,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
   );
 
   const sendChatMessage = (messageText: string) => {
-    if (messageText === "") {
+    if (messageTextIsEmpty) {
       alert("Enter text!");
       return;
     }
@@ -60,13 +59,13 @@ const ChatComponent = ({ id, name, color }: Props) => {
     sendChatMessage(messageText);
   };
 
-  const handleKeyPress = (event: any) => {
-    if (event.charCode !== 13 || messageTextIsEmpty) {
-      return;
-    }
-    sendChatMessage(messageText);
-    event.preventDefault();
-  };
+  // const handleKeyPress = (event: any) => {
+  //   if (event.charCode !== 13 || messageTextIsEmpty) {
+  //     return;
+  //   }
+  //   sendChatMessage(messageText);
+  //   event.preventDefault();
+  // };
 
   const messages = receivedMessages.map((message: any, index) => {
     return message.connectionId === ably.connection.id ? (
@@ -96,6 +95,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
 
   return (
     <div>
+      <InviteButton roomID={id} />
       <MessageFeed messages={messages} />
       <div
         ref={(element) => {
@@ -113,7 +113,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
             }}
           />
           <Button colorScheme="teal" size="md" onClick={handleFormSubmission}>
-            Button
+            Send
           </Button>
         </HStack>
       </Center>

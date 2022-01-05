@@ -10,6 +10,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const getNextAvailRoomID = () => {
@@ -18,7 +19,12 @@ const getNextAvailRoomID = () => {
 };
 
 export default function Credentials() {
-  const nextID = getNextAvailRoomID();
+  const router = useRouter();
+  let { roomID }: any = router.query;
+  let nextID;
+  if (!roomID) {
+    nextID = getNextAvailRoomID();
+  }
   const [name, setName] = useState<string>("Test");
   const [color, setColor] = useState<string>("FF0000");
   return (
@@ -68,9 +74,15 @@ export default function Credentials() {
                 bg: "blue.500",
               }}
             >
-              <Link href={`/room/${nextID}?name=${name}&color=${color}`}>
-                Create Room
-              </Link>
+              {roomID ? (
+                <Link href={`/room/${roomID}?name=${name}&color=${color}`}>
+                  Join Room
+                </Link>
+              ) : (
+                <Link href={`/room/${nextID}?name=${name}&color=${color}`}>
+                  Create Room
+                </Link>
+              )}
             </Button>
           </Stack>
         </Box>

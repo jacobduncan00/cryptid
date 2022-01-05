@@ -5,7 +5,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { Avatar, Wrap, WrapItem, Flex } from "@chakra-ui/react";
+import { Avatar, Wrap, WrapItem } from "@chakra-ui/react";
 
 type Props = {
   align: string;
