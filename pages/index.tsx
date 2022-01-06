@@ -15,6 +15,7 @@ export default function Homepage() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
+      <ThemeButton />
       <Head>
         <title>Cryptid</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -65,7 +66,6 @@ export default function Homepage() {
               <Button rounded={"full"}>
                 <Link href="/browse">Find Rooms</Link>
               </Button>
-              <ThemeButton />
             </Stack>
           </Stack>
         </Flex>

@@ -5,7 +5,7 @@ const ThemeButton = () => {
   const { toggleColorMode } = useColorMode();
   return (
     <header>
-      <Button h="50px" w="50px" bg={"transparent"} top={0} right={0}>
+      <Button h="50px" w="50px" bg={"transparent"} float={"right"} margin={"2"}>
         <MdDarkMode onClick={toggleColorMode} size="4x" />
       </Button>
     </header>
