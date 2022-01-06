@@ -24,7 +24,9 @@ export default function MessageBubble({
 }: Props): JSX.Element {
   return (
     <VStack w={"full"}>
-      <Text align={"center"}>{timeStamp}</Text>
+      <Text align={"center"} mt={4}>
+        {timeStamp}
+      </Text>
       <HStack>
         {align === "right" && (
           <Wrap>
@@ -34,13 +36,11 @@ export default function MessageBubble({
           </Wrap>
         )}
         <Stack
-          spacing={4}
-          w={"md"}
+          w={"sm"}
           bg={useColorModeValue("white", "gray.700")}
           rounded={"xl"}
           boxShadow={"lg"}
           p={6}
-          my={12}
         >
           <Text>{message}</Text>
         </Stack>

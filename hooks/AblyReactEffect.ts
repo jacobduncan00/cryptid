@@ -6,8 +6,6 @@ const ably = new Ably.Realtime({
   authUrl: "/api/createTokenRequest",
 });
 
-console.log(process.env.BASE_URL);
-
 export function useChannel(
   channelName: string,
   callbackOnMessage: (msg: Types.Message) => void

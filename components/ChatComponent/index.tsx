@@ -95,7 +95,6 @@ const ChatComponent = ({ id, name, color }: Props) => {
 
   return (
     <div>
-      <InviteButton roomID={id} />
       <MessageFeed messages={messages} />
       <div
         ref={(element) => {
@@ -104,6 +103,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
       ></div>
       <Center pb={12}>
         <HStack pos="absolute" bottom="0">
+          <InviteButton roomID={id} />
           <Input
             placeholder="Message"
             w={512}
