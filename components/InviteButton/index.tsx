@@ -5,11 +5,11 @@ type Props = {
 };
 
 const InviteButton = ({ roomID }: Props) => {
-  const genInviteLink = () => {
+  const genInviteLink = async () => {
     console.log(
       `${window.location.origin}/create/credentials?roomID=${roomID}`
     );
-    navigator.clipboard.writeText(
+    await navigator.clipboard.writeText(
       `${window.location.origin}/create/credentials?roomID=${roomID}`
     );
     // MODAL needed here
