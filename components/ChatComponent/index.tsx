@@ -1,10 +1,11 @@
-import { Button, Center, HStack, Input } from "@chakra-ui/react";
+import { Button, Center, HStack, Input, useDisclosure } from "@chakra-ui/react";
 import { Types } from "ably";
 import { useState, useEffect } from "react";
 import { useChannel } from "../../hooks/AblyReactEffect";
 import InviteButton from "../InviteButton";
 import MessageBubble from "../MessageBubble";
 import MessageFeed from "../MessageFeed";
+import ErrorModal from "../Modal";
 
 type Props = {
   id: number;
@@ -18,6 +19,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState<Types.Message[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [channel, ably] = useChannel(
     // `channel${id}`,
@@ -29,10 +31,6 @@ const ChatComponent = ({ id, name, color }: Props) => {
   );
 
   const sendChatMessage = (messageText: string) => {
-    if (messageTextIsEmpty) {
-      alert("Enter text!");
-      return;
-    }
     var today = new Date().toLocaleDateString(undefined, {
       day: "2-digit",
       month: "2-digit",
@@ -112,11 +110,23 @@ const ChatComponent = ({ id, name, color }: Props) => {
               inputBox = element;
             }}
           />
-          <Button colorScheme="teal" size="md" onClick={handleFormSubmission}>
+          <Button
+            colorScheme="teal"
+            size="md"
+            onClick={messageTextIsEmpty ? onOpen : handleFormSubmission}
+          >
             Send
           </Button>
         </HStack>
       </Center>
+      <ErrorModal
+        isOpen={isOpen}
+        onClose={onClose}
+        title={"Failed To Send Message"}
+        message={
+          "We cannot send your message because you did not input a message. Try typing a message then hitting the send button."
+        }
+      />
     </div>
   );
 };
