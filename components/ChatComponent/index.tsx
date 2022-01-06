@@ -5,7 +5,7 @@ import { useChannel } from "../../hooks/AblyReactEffect";
 import InviteButton from "../InviteButton";
 import MessageBubble from "../MessageBubble";
 import MessageFeed from "../MessageFeed";
-import ErrorModal from "../Modal";
+import GPModal from "../Modal";
 
 type Props = {
   id: number;
@@ -119,7 +119,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
           </Button>
         </HStack>
       </Center>
-      <ErrorModal
+      <GPModal
         isOpen={isOpen}
         onClose={onClose}
         title={"Failed To Send Message"}

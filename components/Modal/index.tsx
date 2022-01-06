@@ -18,7 +18,7 @@ type Props = {
   message: string;
 };
 
-const ErrorModal = ({ isOpen, onClose, title, message }: Props) => {
+const GPModal = ({ isOpen, onClose, title, message }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -38,4 +38,4 @@ const ErrorModal = ({ isOpen, onClose, title, message }: Props) => {
   );
 };
 
-export default ErrorModal;
+export default GPModal;

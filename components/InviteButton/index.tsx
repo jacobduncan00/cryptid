@@ -1,10 +1,12 @@
-import { Button } from "@chakra-ui/react";
+import { Button, useDisclosure } from "@chakra-ui/react";
+import GPModal from "../Modal";
 
 type Props = {
   roomID: number;
 };
 
 const InviteButton = ({ roomID }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const genInviteLink = async () => {
     console.log(
       `${window.location.origin}/create/credentials?roomID=${roomID}`
@@ -12,13 +14,26 @@ const InviteButton = ({ roomID }: Props) => {
     await navigator.clipboard.writeText(
       `${window.location.origin}/create/credentials?roomID=${roomID}`
     );
-    // MODAL needed here
-    alert("Invite link copied to clipboard!");
   };
   return (
-    <Button colorScheme="teal" size="md" onClick={genInviteLink}>
-      Invite
-    </Button>
+    <>
+      <Button
+        colorScheme="teal"
+        size="md"
+        onClick={() => {
+          genInviteLink();
+          onOpen();
+        }}
+      >
+        Invite
+      </Button>
+      <GPModal
+        isOpen={isOpen}
+        onClose={onClose}
+        title="Invite Link"
+        message={"Copied to clipboard successfully!"}
+      />
+    </>
   );
 };
 export default InviteButton;
