@@ -65,10 +65,6 @@ const ChatComponent = ({ id, name, color }: Props) => {
   const handleFormSubmission = (event: any) => {
     event.preventDefault();
     sendChatMessage(messageText);
-    // This is a bad fix for the scroll inssue
-    setTimeout(() => {
-      messages.length > 5 ? executeScroll() : null;
-    }, 200);
   };
 
   const messages = receivedMessages.map((message: any, index) => {

@@ -35,7 +35,7 @@ export default function Credentials() {
   const [privateRoom, setPrivateRoom] = useState<boolean>(false);
   const [color, setColor] = useState<string>("#FF0000");
 
-  const isNameError = name === "" && nameChangeCounter > 0;
+  let isNameError = name === "" && nameChangeCounter > 0;
 
   return (
     <Flex
@@ -105,8 +105,7 @@ export default function Credentials() {
             ) : (
               <Link
                 href={`/room/${nextID}?name=${name}&color=${color.substring(
-                  1,
-                  color.length
+                  1
                 )}`}
               >
                 <Button
