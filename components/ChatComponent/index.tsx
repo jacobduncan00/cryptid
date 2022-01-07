@@ -34,6 +34,9 @@ const ChatComponent = ({ id, name, color }: Props) => {
     (message: Types.Message) => {
       const history = receivedMessages.slice(-199);
       setMessages([...history, message]);
+      setTimeout(() => {
+        messages.length > 5 ? executeScroll() : null;
+      }, 200);
     }
   );
 
