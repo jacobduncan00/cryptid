@@ -64,17 +64,16 @@ const ChatComponent = ({ id, name, color }: Props) => {
     sendChatMessage(messageText);
     // This is a bad fix for the scroll inssue
     setTimeout(() => {
-      executeScroll();
+      messages.length > 5 ? executeScroll() : null;
     }, 200);
   };
 
   const messages = receivedMessages.map((message: any, index) => {
     return (
-      <div ref={messageEnd}>
+      <div ref={messageEnd} key={index}>
         {message.connectionId === ably.connection.id ? (
           <MessageBubble
             align={"right"}
-            key={index}
             message={message.data.message}
             name={message.data.name}
             color={message.data.color}
@@ -83,7 +82,6 @@ const ChatComponent = ({ id, name, color }: Props) => {
         ) : (
           <MessageBubble
             align={"left"}
-            key={index}
             message={message.data.message}
             name={message.data.name}
             color={message.data.color}
