@@ -7,7 +7,6 @@ type Props = {
 export default function MessageFeed({ messages }: Props): JSX.Element {
   return (
     <Flex
-      minH={"90vh"}
       align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}

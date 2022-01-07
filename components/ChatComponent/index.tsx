@@ -1,6 +1,13 @@
-import { Button, Center, HStack, Input, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  HStack,
+  Input,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { Types } from "ably";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useChannel } from "../../hooks/AblyReactEffect";
 import InviteButton from "../InviteButton";
 import MessageBubble from "../MessageBubble";
@@ -15,7 +22,7 @@ type Props = {
 
 const ChatComponent = ({ id, name, color }: Props) => {
   let inputBox: any = null;
-  let messageEnd: any = null;
+  let messageEnd: any = useRef(null);
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState<Types.Message[]>([]);
   const messageTextIsEmpty = messageText.trim().length === 0;
@@ -55,65 +62,69 @@ const ChatComponent = ({ id, name, color }: Props) => {
   const handleFormSubmission = (event: any) => {
     event.preventDefault();
     sendChatMessage(messageText);
+    // This is a bad fix for the scroll inssue
+    setTimeout(() => {
+      executeScroll();
+    }, 200);
   };
 
-  // const handleKeyPress = (event: any) => {
-  //   if (event.charCode !== 13 || messageTextIsEmpty) {
-  //     return;
-  //   }
-  //   sendChatMessage(messageText);
-  //   event.preventDefault();
-  // };
-
   const messages = receivedMessages.map((message: any, index) => {
-    return message.connectionId === ably.connection.id ? (
-      <MessageBubble
-        align={"right"}
-        key={index}
-        message={message.data.message}
-        name={message.data.name}
-        color={message.data.color}
-        timeStamp={message.data.timeStamp}
-      />
-    ) : (
-      <MessageBubble
-        align={"left"}
-        key={index}
-        message={message.data.message}
-        name={message.data.name}
-        color={message.data.color}
-        timeStamp={message.data.timeStamp}
-      />
+    return (
+      <div ref={messageEnd}>
+        {message.connectionId === ably.connection.id ? (
+          <MessageBubble
+            align={"right"}
+            key={index}
+            message={message.data.message}
+            name={message.data.name}
+            color={message.data.color}
+            timeStamp={message.data.timeStamp}
+          />
+        ) : (
+          <MessageBubble
+            align={"left"}
+            key={index}
+            message={message.data.message}
+            name={message.data.name}
+            color={message.data.color}
+            timeStamp={message.data.timeStamp}
+          />
+        )}
+      </div>
     );
   });
 
-  useEffect(() => {
-    messageEnd.scrollIntoView({ behaviour: "smooth" });
-  });
+  const executeScroll = () => {
+    messageEnd.current.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
 
   return (
-    <div>
-      <MessageFeed messages={messages} />
-      <div
-        ref={(element) => {
-          messageEnd = element;
-        }}
-      ></div>
-      <Center pb={12}>
+    <>
+      <VStack height={"90vh"} overflowY={"auto"}>
+        <MessageFeed messages={messages} />
+      </VStack>
+      <Center pb={12} mt={12}>
         <HStack pos="absolute" bottom="0">
           <InviteButton roomID={id} />
-          <Input
-            placeholder="Message"
-            w={512}
-            onChange={(e) => setMessageText(e.currentTarget.value)}
-            ref={(element) => {
-              inputBox = element;
-            }}
-          />
+          <form onSubmit={handleFormSubmission}>
+            <Input
+              placeholder="Message"
+              w={512}
+              onChange={(e) => setMessageText(e.currentTarget.value)}
+              ref={(element) => {
+                inputBox = element;
+              }}
+            />
+          </form>
           <Button
             colorScheme="teal"
             size="md"
-            onClick={messageTextIsEmpty ? onOpen : handleFormSubmission}
+            onClick={(e) => {
+              messageTextIsEmpty ? onOpen() : handleFormSubmission(e);
+              messages.length > 5 ? executeScroll() : null;
+            }}
           >
             Send
           </Button>
@@ -127,7 +138,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
           "We cannot send your message because you did not input a message. Try typing a message then hitting the send button."
         }
       />
-    </div>
+    </>
   );
 };
 export default ChatComponent;

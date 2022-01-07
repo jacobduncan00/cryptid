@@ -8,11 +8,9 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Head from "next/head";
-import { useColorMode } from "@chakra-ui/react";
 import ThemeButton from "../components/ThemeButton";
 
 export default function Homepage() {
-  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
       <ThemeButton />
@@ -50,22 +48,24 @@ export default function Homepage() {
               friends securely via end-to-end encrypted messages
             </Text>
             <Stack direction={{ base: "column", md: "row" }} spacing={4}>
-              <Button
-                rounded={"full"}
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-              >
-                <Link href="/create/credentials">Create Room</Link>
-              </Button>
-              <Button rounded={"full"}>
-                <Link href="/join">Join Room</Link>
-              </Button>
-              <Button rounded={"full"}>
-                <Link href="/browse">Find Rooms</Link>
-              </Button>
+              <Link href="/create/credentials">
+                <Button
+                  rounded={"full"}
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Create Room
+                </Button>
+              </Link>
+              <Link href="/join">
+                <Button rounded={"full"}>Join Room</Button>
+              </Link>
+              <Link href="/browse">
+                <Button rounded={"full"}>Find Rooms</Button>
+              </Link>
             </Stack>
           </Stack>
         </Flex>
