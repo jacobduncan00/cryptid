@@ -33,7 +33,7 @@ export default function Credentials() {
   const [name, setName] = useState<string>("");
   const [nameChangeCounter, setNameChangeCounter] = useState<number>(0);
   const [privateRoom, setPrivateRoom] = useState<boolean>(false);
-  const [color, setColor] = useState<string>("#aabbcc");
+  const [color, setColor] = useState<string>("#FF0000");
 
   const isNameError = name === "" && nameChangeCounter > 0;
 
@@ -46,7 +46,7 @@ export default function Credentials() {
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Chat Settings</Heading>
+          <Heading fontSize={"4xl"}>Appearance Settings</Heading>
         </Stack>
         <Box
           rounded={"lg"}
@@ -90,28 +90,36 @@ export default function Credentials() {
               align={"start"}
               justify={"space-between"}
             />
-            <Button
-              bg={"blue.400"}
-              color={"white"}
-              _hover={{
-                bg: "blue.500",
-              }}
-            >
-              {roomID ? (
-                <Link href={`/room/${roomID}?name=${name}&color=${color}`}>
+            {roomID ? (
+              <Link href={`/room/${roomID}?name=${name}&color=${color}`}>
+                <Button
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
                   Join Room
-                </Link>
-              ) : (
-                <Link
-                  href={`/room/${nextID}?name=${name}&color=${color.substring(
-                    1,
-                    color.length
-                  )}`}
+                </Button>
+              </Link>
+            ) : (
+              <Link
+                href={`/room/${nextID}?name=${name}&color=${color.substring(
+                  1,
+                  color.length
+                )}`}
+              >
+                <Button
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
                 >
                   Create Room
-                </Link>
-              )}
-            </Button>
+                </Button>
+              </Link>
+            )}
           </Stack>
         </Box>
       </Stack>

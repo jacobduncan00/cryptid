@@ -9,5 +9,5 @@
 - [] Have desired functionality of buttons on landing page
 - [x] Change theme button and place in better spot
 - [] Add functionality for private rooms
-- [] Issue with certain colors not rendering at all
+- [x] Issue with certain colors not rendering at all
 - [] Make scrollable 'view' / 'area' for the chat messages and don't scroll entire screen
