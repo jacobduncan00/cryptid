@@ -13,3 +13,4 @@
   - [ ] Find alternative to not having a valid Chakra Color for BG
 - [x] Make scrollable 'view' / 'area' for the chat messages and don't scroll entire screen
 - [] Make responsive for mobile
+- [] Hash the URL parameters
