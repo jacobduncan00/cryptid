@@ -15,27 +15,38 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
-const getNextAvailRoomID = () => {
-  // return the id of the next available room
-  return 1;
+const getNextAvailRoomID = async () => {
+  const availRoomID = await fetch("/api/getOpenRoomRequest");
+  const availRoomIDJSON = await availRoomID.json();
+  return availRoomIDJSON.roomID;
 };
 
 export default function Credentials() {
   const router = useRouter();
   let { roomID }: any = router.query;
-  let nextID;
-  if (!roomID) {
-    nextID = getNextAvailRoomID();
-  }
+  let nextID: any;
+  useEffect(() => {
+    if (!roomID) {
+      nextID = getNextAvailRoomID();
+      console.log(nextID);
+    }
+  }, []);
   const [name, setName] = useState<string>("");
   const [nameChangeCounter, setNameChangeCounter] = useState<number>(0);
   const [privateRoom, setPrivateRoom] = useState<boolean>(false);
   const [color, setColor] = useState<string>("#FF0000");
 
   let isNameError = name === "" && nameChangeCounter > 0;
+
+  const setRoomClosed = async () => {
+    // await fetch("/api/setRoomClosedRequest", {
+    //   method: "POST",
+    //   body: JSON.stringify({ roomID: nextID }),
+    // });
+  };
 
   return (
     <Flex
@@ -114,6 +125,7 @@ export default function Credentials() {
                   _hover={{
                     bg: "blue.500",
                   }}
+                  onClick={setRoomClosed}
                 >
                   Create Room
                 </Button>

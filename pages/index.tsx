@@ -60,10 +60,7 @@ export default function Homepage() {
                   Create Room
                 </Button>
               </Link>
-              <Link href="/join">
-                <Button rounded={"full"}>Join Room</Button>
-              </Link>
-              <Link href="/browse">
+              <Link href="/browse/rooms">
                 <Button rounded={"full"}>Find Rooms</Button>
               </Link>
             </Stack>
