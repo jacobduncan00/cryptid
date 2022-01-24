@@ -1,6 +1,13 @@
 import redis from "../../lib/redis";
 export default async (req: any, res: any) => {
+  // redis.flushall();
   const rooms = await redis.hvals("rooms");
-  console.log(rooms);
-  res.status(200).send("ok");
+  let resArr: any[] = [];
+  for (let i = 1; i < rooms.length + 1; i++) {
+    redis.hget("rooms", i.toString()).then((r) => {
+      console.log(r);
+      resArr.push(r);
+    });
+  }
+  res.status(200).send({ rooms: resArr, roomLen: rooms.length });
 };

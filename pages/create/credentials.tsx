@@ -18,22 +18,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
-const getNextAvailRoomID = async () => {
-  const availRoomID = await fetch("/api/getOpenRoomRequest");
-  const availRoomIDJSON = await availRoomID.json();
-  return availRoomIDJSON.roomID;
-};
-
 export default function Credentials() {
   const router = useRouter();
   let { roomID }: any = router.query;
-  let nextID: any;
-  useEffect(() => {
-    if (!roomID) {
-      nextID = getNextAvailRoomID();
-      console.log(nextID);
-    }
-  }, []);
+  const [rID, setRID] = useState<number>(roomID);
   const [name, setName] = useState<string>("");
   const [nameChangeCounter, setNameChangeCounter] = useState<number>(0);
   const [privateRoom, setPrivateRoom] = useState<boolean>(false);
@@ -41,11 +29,28 @@ export default function Credentials() {
 
   let isNameError = name === "" && nameChangeCounter > 0;
 
+  const getNextAvailRoomID = async () => {
+    const availRoomID = await fetch("/api/getOpenRoomRequest");
+    const availRoomIDJSON = await availRoomID.json();
+    console.log("Next Room ID", availRoomIDJSON.roomLen + 1);
+    return availRoomIDJSON.roomLen + 1;
+  };
+
+  useEffect(() => {
+    const setRoomID = async () => {
+      if (roomID === undefined || rID === undefined) {
+        setRID(await getNextAvailRoomID());
+      }
+    };
+    setRoomID();
+  }, []);
+
   const setRoomClosed = async () => {
-    // await fetch("/api/setRoomClosedRequest", {
-    //   method: "POST",
-    //   body: JSON.stringify({ roomID: nextID }),
-    // });
+    await fetch("/api/setRoomClosedRequest", {
+      method: "POST",
+      body: rID!.toString(),
+    });
+    console.log("REQUEST SENT");
   };
 
   return (
@@ -58,6 +63,7 @@ export default function Credentials() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Appearance Settings</Heading>
+          <Heading fontSize={"2xl"}>Room #{rID}</Heading>
         </Stack>
         <Box
           rounded={"lg"}
@@ -102,7 +108,7 @@ export default function Credentials() {
               justify={"space-between"}
             />
             {roomID ? (
-              <Link href={`/room/${roomID}?name=${name}&color=${color}`}>
+              <Link href={`/room/${rID}?name=${name}&color=${color}`}>
                 <Button
                   bg={"blue.400"}
                   color={"white"}
@@ -115,9 +121,7 @@ export default function Credentials() {
               </Link>
             ) : (
               <Link
-                href={`/room/${nextID}?name=${name}&color=${color.substring(
-                  1
-                )}`}
+                href={`/room/${rID}?name=${name}&color=${color.substring(1)}`}
               >
                 <Button
                   bg={"blue.400"}
@@ -125,7 +129,7 @@ export default function Credentials() {
                   _hover={{
                     bg: "blue.500",
                   }}
-                  onClick={setRoomClosed}
+                  onClick={async () => await setRoomClosed()}
                 >
                   Create Room
                 </Button>
