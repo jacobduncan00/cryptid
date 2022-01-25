@@ -37,13 +37,15 @@ export default function Credentials() {
   };
 
   useEffect(() => {
-    const setRoomID = async () => {
-      if (roomID === undefined || rID === undefined) {
+    if (roomID === undefined) {
+      const setRoomID = async () => {
         setRID(await getNextAvailRoomID());
-      }
-    };
-    setRoomID();
-  }, []);
+      };
+      setRoomID();
+    } else {
+      setRID(roomID);
+    }
+  }, [roomID]);
 
   const setRoomClosed = async () => {
     await fetch("/api/setRoomClosedRequest", {

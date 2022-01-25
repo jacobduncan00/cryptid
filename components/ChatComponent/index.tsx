@@ -29,8 +29,7 @@ const ChatComponent = ({ id, name, color }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [channel, ably] = useChannel(
-    // `channel${id}`,
-    "channel1",
+    `channel${id}`,
     (message: Types.Message) => {
       const history = receivedMessages.slice(-199);
       setMessages([...history, message]);
