@@ -5,6 +5,7 @@ export default async (req: any, res: any) => {
   let resArr: any[] = [];
   for (let i = 1; i < rooms.length + 1; i++) {
     await redis.hget("rooms", i.toString()).then((r) => {
+      console.log(r);
       resArr.push(r);
     });
   }
