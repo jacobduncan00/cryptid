@@ -110,7 +110,9 @@ export default function Credentials() {
               justify={"space-between"}
             />
             {roomID ? (
-              <Link href={`/room/${rID}?name=${name}&color=${color}`}>
+              <Link
+                href={`/room/${rID}?name=${name}&color=${color.substring(1)}`}
+              >
                 <Button
                   bg={"blue.400"}
                   color={"white"}
