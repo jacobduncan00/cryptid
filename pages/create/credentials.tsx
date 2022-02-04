@@ -45,7 +45,7 @@ export default function Credentials() {
     } else {
       setRID(roomID);
     }
-  }, [roomID]);
+  }, [rID]);
 
   const setRoomClosed = async () => {
     await fetch("/api/setRoomClosedRequest", {
