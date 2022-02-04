@@ -29,7 +29,7 @@ const Rooms = () => {
       return (
         <Box
           rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
+          bg={"gray.700"}
           boxShadow={"lg"}
           p={8}
           key={room}
